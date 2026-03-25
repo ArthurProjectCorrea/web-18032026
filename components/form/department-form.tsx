@@ -12,6 +12,7 @@ import {
 } from '@/lib/actions/department-actions';
 
 import { DepartmentFormProps } from '@/types/department';
+import { Save, Building2 } from 'lucide-react';
 
 export function DepartmentForm({ data, close }: DepartmentFormProps) {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -49,10 +50,18 @@ export function DepartmentForm({ data, close }: DepartmentFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <form
+      onSubmit={handleSubmit}
+      className="animate-in fade-in space-y-6 duration-300"
+    >
       <FieldGroup>
         <Field>
-          <FieldLabel htmlFor="name">Nome do Departamento</FieldLabel>
+          <FieldLabel
+            htmlFor="name"
+            className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+          >
+            Nome do Departamento
+          </FieldLabel>
           <Input
             id="name"
             name="name"
@@ -64,23 +73,37 @@ export function DepartmentForm({ data, close }: DepartmentFormProps) {
             autoCorrect="off"
             spellCheck="false"
             disabled={isLoading}
+            className="bg-background focus-visible:ring-primary/20"
           />
         </Field>
+
+        <Field>
+          <div className="flex justify-end gap-3 pt-2">
+            <Button
+              variant="outline"
+              type="button"
+              onClick={close}
+              disabled={isLoading}
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="min-w-[140px] font-bold"
+            >
+              {isLoading ? (
+                <Spinner className="mr-2 h-4 w-4" />
+              ) : data ? (
+                <Save className="mr-2 h-4 w-4" />
+              ) : (
+                <Building2 className="mr-2 h-4 w-4" />
+              )}
+              {data ? 'Salvar Alterações' : 'Criar Departamento'}
+            </Button>
+          </div>
+        </Field>
       </FieldGroup>
-      <div className="flex justify-end gap-2">
-        <Button
-          variant="outline"
-          type="button"
-          onClick={close}
-          disabled={isLoading}
-        >
-          Cancelar
-        </Button>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading && <Spinner className="mr-2" />}
-          {data ? 'Salvar Configurações' : 'Criar Departamento'}
-        </Button>
-      </div>
     </form>
   );
 }

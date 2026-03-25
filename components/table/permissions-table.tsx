@@ -10,10 +10,10 @@ import { Permission } from '@/types/permission';
 
 const columns = [
   createTextColumn<Permission>('name', 'Nome da Permissão'),
-  createTextColumn<Permission>('name_key', 'Chave (name_key)'),
+  createTextColumn<Permission>('name_key', 'Chave'),
   createDateColumn<Permission>(
     'updated_at',
-    'Última Atualização',
+    'Atualizado em',
     "dd/MM/yyyy 'às' HH:mm"
   ),
 ];

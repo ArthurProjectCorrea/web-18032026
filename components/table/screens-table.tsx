@@ -10,10 +10,10 @@ import { Screen } from '@/types/screen';
 
 const columns = [
   createTextColumn<Screen>('name', 'Nome da Tela'),
-  createTextColumn<Screen>('name_key', 'Chave (name_key)'),
+  createTextColumn<Screen>('name_key', 'Chave'),
   createDateColumn<Screen>(
     'updated_at',
-    'Última Atualização',
+    'Atualizado em',
     "dd/MM/yyyy 'às' HH:mm"
   ),
 ];

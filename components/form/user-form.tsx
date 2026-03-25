@@ -12,9 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
-import { Save } from 'lucide-react';
+import { Save, UserPlus } from 'lucide-react';
 import { fetchApi } from '@/lib/api';
 import { createUser, updateUser } from '@/lib/actions/user-actions';
 import { UserData } from '@/types/user';
@@ -131,14 +131,14 @@ export function UserForm({ data, close }: UserFormProps) {
       onSubmit={handleSubmit}
       className="animate-in fade-in space-y-6 duration-300"
     >
-      <div className="grid gap-6">
+      <FieldGroup className="gap-6">
         <div className="grid gap-4 md:grid-cols-2">
           <Field>
             <FieldLabel className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase">
               Nome Completo
             </FieldLabel>
             <Input
-              placeholder="Ex: Arthur Corrêa"
+              placeholder="Ex: João Silva"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -166,7 +166,7 @@ export function UserForm({ data, close }: UserFormProps) {
         <div className="grid gap-4 md:grid-cols-2">
           <Field>
             <FieldLabel className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase">
-              Departamento (Filtro)
+              Departamento
             </FieldLabel>
             <Select
               value={selectedDepartmentId}
@@ -230,30 +230,34 @@ export function UserForm({ data, close }: UserFormProps) {
             className="bg-background focus-visible:ring-primary/30"
           />
         </Field>
-      </div>
 
-      <div className="flex justify-end gap-3 border-t pt-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={close}
-          disabled={isLoading}
-        >
-          Cancelar
-        </Button>
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className="min-w-[140px] font-bold"
-        >
-          {isLoading ? (
-            <Spinner className="mr-2 h-4 w-4" />
-          ) : (
-            <Save className="mr-2 h-4 w-4" />
-          )}
-          {isEdit ? 'Salvar Alterações' : 'Criar Usuário'}
-        </Button>
-      </div>
+        <Field>
+          <div className="flex justify-end gap-3 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={close}
+              disabled={isLoading}
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="min-w-[140px] font-bold"
+            >
+              {isLoading ? (
+                <Spinner className="mr-2 h-4 w-4" />
+              ) : isEdit ? (
+                <Save className="mr-2 h-4 w-4" />
+              ) : (
+                <UserPlus className="mr-2 h-4 w-4" />
+              )}
+              {isEdit ? 'Salvar Alterações' : 'Criar Usuário'}
+            </Button>
+          </div>
+        </Field>
+      </FieldGroup>
     </form>
   );
 }

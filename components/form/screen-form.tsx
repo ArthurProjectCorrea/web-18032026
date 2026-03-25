@@ -6,6 +6,7 @@ import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { toast } from 'sonner';
+import { Save } from 'lucide-react';
 import { updateScreen } from '@/lib/actions/screen-actions';
 import { Screen } from '@/types/screen';
 
@@ -45,39 +46,67 @@ export function ScreenForm({ data, close }: ScreenFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <form
+      onSubmit={handleSubmit}
+      className="animate-in fade-in space-y-6 duration-300"
+    >
       <FieldGroup>
+        <div className="grid gap-6">
+          <Field>
+            <FieldLabel className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase">
+              Chave (Não editável)
+            </FieldLabel>
+            <Input
+              value={data?.name_key}
+              disabled
+              className="bg-muted opacity-80"
+            />
+          </Field>
+          <Field>
+            <FieldLabel
+              htmlFor="name"
+              className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+            >
+              Nome da Tela
+            </FieldLabel>
+            <Input
+              id="name"
+              name="name"
+              defaultValue={data?.name || ''}
+              placeholder="Ex: Gerenciamento de Usuários"
+              required
+              disabled={isLoading}
+              autoFocus
+              className="bg-background focus-visible:ring-primary/20"
+            />
+          </Field>
+        </div>
+
         <Field>
-          <FieldLabel>Chave (Não editável)</FieldLabel>
-          <Input value={data?.name_key} disabled className="bg-muted" />
-        </Field>
-        <Field>
-          <FieldLabel htmlFor="name">Nome da Tela</FieldLabel>
-          <Input
-            id="name"
-            name="name"
-            defaultValue={data?.name || ''}
-            placeholder="Ex: Gerenciamento de Usuários"
-            required
-            disabled={isLoading}
-            autoFocus
-          />
+          <div className="flex justify-end gap-3 pt-2">
+            <Button
+              variant="outline"
+              type="button"
+              onClick={close}
+              disabled={isLoading}
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="min-w-[140px] font-bold"
+            >
+              {isLoading ? (
+                <Spinner className="mr-2 h-4 w-4" />
+              ) : (
+                <Save className="mr-2 h-4 w-4" />
+              )}
+              Salvar Alterações
+            </Button>
+          </div>
         </Field>
       </FieldGroup>
-      <div className="flex justify-end gap-2">
-        <Button
-          variant="outline"
-          type="button"
-          onClick={close}
-          disabled={isLoading}
-        >
-          Cancelar
-        </Button>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading && <Spinner className="mr-2" />}
-          Salvar Alterações
-        </Button>
-      </div>
     </form>
   );
 }

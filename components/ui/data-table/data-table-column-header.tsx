@@ -1,3 +1,6 @@
+'use client';
+
+import * as React from 'react';
 import { Column } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from 'lucide-react';
 
@@ -24,8 +27,29 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>;
+  }
+
+  if (!mounted) {
+    return (
+      <div className={cn('flex items-center space-x-2', className)}>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="data-[state=open]:bg-accent -ml-3"
+        >
+          <span>{title}</span>
+          <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+    );
   }
 
   return (

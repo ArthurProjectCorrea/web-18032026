@@ -7,6 +7,7 @@ import {
   SendIcon,
   Shield,
 } from 'lucide-react';
+import { SCREENS, ACTIONS } from '@/configs/permissions';
 
 export const sidebarData = {
   quickActions: [
@@ -14,7 +15,8 @@ export const sidebarData = {
       title: 'Novo Atendimento SEEU',
       url: '/seeu-service/create',
       icon: <Plus />,
-      screen: 'seeu_service',
+      screen: SCREENS.SEEU_SERVICE,
+      action: ACTIONS.CREATE,
     },
   ],
   navMain: [
@@ -23,23 +25,13 @@ export const sidebarData = {
       url: '/',
       icon: <LayoutDashboardIcon />,
     },
-    // {
-    //   title: 'SEEU',
-    //   url: '/seeu-service',
-    //   icon: <Cog />,
-    //   screen: 'seeu_service',
-    // },
-    // {
-    //   title: 'Cadastros',
-    //   icon: <Plus />,
-    //   items: [
-    //     {
-    //       title: 'Pessoas',
-    //       url: '/register/people',
-    //       screen: 'people',
-    //     },
-    //   ],
-    // },
+    {
+      title: 'SEEU',
+      url: '/seeu-service',
+      icon: <Cog />,
+      screen: SCREENS.SEEU_SERVICE,
+      action: ACTIONS.VIEW,
+    },
     {
       title: 'Administrador',
       icon: <Shield />,
@@ -47,33 +39,39 @@ export const sidebarData = {
         {
           title: 'Usuários',
           url: '/admin/users',
-          screen: 'users',
+          screen: SCREENS.USERS,
+          action: ACTIONS.VIEW,
         },
         {
           title: 'Cargos',
           url: '/admin/positions',
-          screen: 'positions',
+          screen: SCREENS.POSITIONS,
+          action: ACTIONS.VIEW,
         },
         {
           title: 'Departamentos',
           url: '/admin/departments',
-          screen: 'departments',
+          screen: SCREENS.DEPARTMENTS,
+          action: ACTIONS.VIEW,
         },
-        // {
-        //   title: 'Telas',
-        //   url: '/admin/screens',
-        //   screen: 'screens_manage',
-        // },
-        // {
-        //   title: 'Permissões',
-        //   url: '/admin/permissions',
-        //   screen: 'permissions_manage',
-        // },
-        // {
-        //   title: 'Logs do Sistema',
-        //   url: '/admin/logs',
-        //   screen: 'audit_logs',
-        // },
+        {
+          title: 'Telas',
+          url: '/admin/screens',
+          screen: SCREENS.SCREENS,
+          action: ACTIONS.VIEW,
+        },
+        {
+          title: 'Permissões',
+          url: '/admin/permissions',
+          screen: SCREENS.PERMISSIONS,
+          action: ACTIONS.VIEW,
+        },
+        {
+          title: 'Logs do Sistema',
+          url: '/admin/logs',
+          screen: SCREENS.AUDIT_LOGS,
+          action: ACTIONS.VIEW,
+        },
       ],
     },
   ],
@@ -82,6 +80,11 @@ export const sidebarData = {
       title: 'Support',
       url: '#',
       icon: <LifeBuoyIcon />,
+    },
+    {
+      title: 'Debug',
+      url: '/debug-perms',
+      icon: <SendIcon />,
     },
     {
       title: 'Feedback',

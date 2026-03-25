@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { updateUser } from '@/lib/actions/user-actions';
 import { toast } from 'sonner';
-import { Field, FieldLabel } from '@/components/ui/field';
+import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 import { RefreshCw, Save } from 'lucide-react';
@@ -87,89 +87,135 @@ export function ProfileSettingsForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className={cn('flex flex-col gap-6 py-4', className)}
+      className={cn('animate-in fade-in duration-300', className)}
     >
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field>
-          <FieldLabel htmlFor="name">Nome</FieldLabel>
-          <Input
-            id="name"
-            name="name"
-            defaultValue={user.name || ''}
-            placeholder="Seu nome completo"
-            className="bg-background"
-          />
-          {errorName && <p className="text-destructive text-sm">{errorName}</p>}
-        </Field>
+      <FieldGroup className="py-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <Field>
+            <FieldLabel
+              htmlFor="name"
+              className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+            >
+              Nome
+            </FieldLabel>
+            <Input
+              id="name"
+              name="name"
+              defaultValue={user.name || ''}
+              placeholder="Seu nome completo"
+              className="bg-background focus-visible:ring-primary/20"
+            />
+            {errorName && (
+              <p className="text-destructive mt-1 text-sm">{errorName}</p>
+            )}
+          </Field>
+
+          <Field>
+            <FieldLabel
+              htmlFor="email"
+              className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+            >
+              E-mail
+            </FieldLabel>
+            <Input
+              id="email"
+              value={user.email}
+              disabled
+              className="bg-muted cursor-not-allowed opacity-80"
+            />
+            <p className="text-muted-foreground mt-1.5 px-1 text-[10px]">
+              * O E-mail não pode ser alterado.
+            </p>
+          </Field>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <Field>
+            <FieldLabel
+              htmlFor="registration"
+              className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+            >
+              Matrícula
+            </FieldLabel>
+            <Input
+              id="registration"
+              name="registration"
+              defaultValue={user.registration || ''}
+              placeholder="Sua matrícula funcional"
+              className="bg-background focus-visible:ring-primary/20"
+            />
+          </Field>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <Field>
+            <FieldLabel
+              htmlFor="department"
+              className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+            >
+              Departamento
+            </FieldLabel>
+            <Input
+              id="department"
+              value={user.department || 'Não informado'}
+              disabled
+              className="bg-muted cursor-not-allowed opacity-80"
+            />
+            <p className="text-muted-foreground mt-1.5 px-1 text-[10px]">
+              * O Departamento só pode ser alterado por um administrador.
+            </p>
+          </Field>
+
+          <Field>
+            <FieldLabel
+              htmlFor="position"
+              className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+            >
+              Cargo
+            </FieldLabel>
+            <Input
+              id="position"
+              value={user.position || 'Não informado'}
+              disabled
+              className="bg-muted cursor-not-allowed opacity-80"
+            />
+            <p className="text-muted-foreground mt-1.5 px-1 text-[10px]">
+              * O Cargo só pode ser alterado por um administrador.
+            </p>
+          </Field>
+        </div>
 
         <Field>
-          <FieldLabel htmlFor="registration">Matrícula</FieldLabel>
-          <Input
-            id="registration"
-            name="registration"
-            defaultValue={user.registration || ''}
-            placeholder="Sua matrícula funcional"
-            className="bg-background"
-          />
+          <div className="flex flex-col gap-3 pt-4 sm:flex-row">
+            <Button
+              type="button"
+              variant="secondary"
+              disabled={isLoading || isSyncing}
+              onClick={handleSync}
+              className="flex-1 font-semibold"
+            >
+              {isSyncing ? (
+                <Spinner className="mr-2" />
+              ) : (
+                <RefreshCw className="mr-2 h-4 w-4" />
+              )}
+              Recarregar Dados
+            </Button>
+            <Button
+              type="submit"
+              disabled={isLoading || isSyncing}
+              className="flex-1 font-bold"
+            >
+              {isLoading ? (
+                <Spinner className="mr-2" />
+              ) : (
+                <Save className="mr-2 h-4 w-4" />
+              )}
+              Salvar Alterações
+            </Button>
+          </div>
         </Field>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field>
-          <FieldLabel htmlFor="department">Departamento</FieldLabel>
-          <Input
-            id="department"
-            value={user.department || 'Não informado'}
-            disabled
-            className="bg-muted cursor-not-allowed opacity-80"
-          />
-          <p className="text-muted-foreground mt-1 px-1 text-[10px]">
-            * O Departamento só pode ser alterado por um administrador.
-          </p>
-        </Field>
-
-        <Field>
-          <FieldLabel htmlFor="position">Cargo</FieldLabel>
-          <Input
-            id="position"
-            value={user.position || 'Não informado'}
-            disabled
-            className="bg-muted cursor-not-allowed opacity-80"
-          />
-          <p className="text-muted-foreground mt-1 px-1 text-[10px]">
-            * O Cargo só pode ser alterado por um administrador.
-          </p>
-        </Field>
-      </div>
-
-      <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-        <Button
-          type="button"
-          variant="secondary"
-          disabled={isLoading || isSyncing}
-          onClick={handleSync}
-          className="flex-1"
-        >
-          {isSyncing ? (
-            <Spinner className="mr-2" />
-          ) : (
-            <RefreshCw className="mr-2 h-4 w-4" />
-          )}
-          Recarregar Dados
-        </Button>
-        <Button
-          type="submit"
-          disabled={isLoading || isSyncing}
-          className="flex-1"
-        >
-          {isLoading ? (
-            <Spinner className="mr-2" />
-          ) : (
-            <Save className="mr-2 h-4 w-4" />
-          )}
-          Salvar Alterações
-        </Button>
-      </div>
+      </FieldGroup>
     </form>
   );
 }

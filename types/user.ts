@@ -1,7 +1,7 @@
 export interface UserData {
   id: string;
   name: string;
-  email?: string;
+  email: string;
   avatar_url?: string | null;
   registration?: string | null;
   created_at?: string;
@@ -25,6 +25,7 @@ export interface ProfileSettingsFormProps {
   user: {
     id: string;
     name: string;
+    email: string;
     registration?: string | null;
     department?: string;
     position?: string;

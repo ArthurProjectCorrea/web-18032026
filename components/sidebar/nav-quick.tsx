@@ -9,17 +9,9 @@ import {
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SidebarItem } from './app-sidebar';
 
-export function NavQuick({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: React.ReactNode;
-    screen?: string;
-  }[];
-}) {
+export function NavQuick({ items }: { items: SidebarItem[] }) {
   const pathname = usePathname();
 
   if (items.length === 0) return null;
@@ -36,10 +28,17 @@ export function NavQuick({
               isActive={pathname === item.url}
               className="text-muted-foreground hover:text-primary font-medium transition-colors"
             >
-              <Link href={item.url}>
-                {item.icon}
-                <span>{item.title}</span>
-              </Link>
+              {item.url ? (
+                <Link href={item.url}>
+                  {item.icon}
+                  <span>{item.title}</span>
+                </Link>
+              ) : (
+                <>
+                  {item.icon}
+                  <span>{item.title}</span>
+                </>
+              )}
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}

@@ -1,13 +1,14 @@
 export const SCREENS = {
-  DASHBOARD: 'dashboard',
   USERS: 'users',
   DEPARTMENTS: 'departments',
   POSITIONS: 'positions',
   SEEU_SERVICE: 'seeu_service',
+  SEEU_SERVICE_CREATE: 'seeu_service_create',
+  SEEU_SERVICE_EDIT: 'seeu_service_edit',
   PEOPLE: 'people',
-  SCREENS: 'screens',
-  PERMISSIONS: 'permissions',
-  ACCESSES: 'accesses',
+  SCREENS: 'screens_manage',
+  PERMISSIONS: 'permissions_manage',
+  AUDIT_LOGS: 'audit_logs',
 } as const;
 
 export const ACTIONS = {

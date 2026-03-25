@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { fetchApi } from '@/lib/api';
 import { getCookiePermissions } from '@/lib/server-permissions';
 import { SCREENS } from '@/configs/permissions';

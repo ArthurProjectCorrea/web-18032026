@@ -92,6 +92,7 @@ export function UserProfileDialog({
                 user={{
                   id: user.id,
                   name: userDisplayName,
+                  email: user.email,
                   registration: profile?.registration,
                   department: deptDisplay,
                   position: roleDisplay,

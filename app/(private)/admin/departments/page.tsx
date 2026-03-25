@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { fetchApi } from '@/lib/api';
 import { getCookiePermissions } from '@/lib/server-permissions';
 import { SCREENS } from '@/configs/permissions';
@@ -11,10 +13,6 @@ export default async function DepartmentsPage() {
   });
   const screenName = await getScreenName(SCREENS.DEPARTMENTS);
   const permissionsData = await getCookiePermissions(SCREENS.DEPARTMENTS);
-
-  console.log('DEBUG DepartmentsPage - data:', departmentsData);
-  console.log('DEBUG DepartmentsPage - screenName:', screenName);
-  console.log('DEBUG DepartmentsPage - permissions:', permissionsData);
 
   return (
     <div className="flex h-full flex-col gap-6 p-6">

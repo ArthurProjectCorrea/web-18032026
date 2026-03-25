@@ -318,7 +318,6 @@ export function DataTable<TData, TValue>({
             size="icon"
             onClick={() => startTransition(() => router.refresh())}
             disabled={isPending}
-            className="w-8"
           >
             <RefreshCw className={cn('h-4 w-4', isPending && 'animate-spin')} />
           </Button>
@@ -395,7 +394,9 @@ export function DataTable<TData, TValue>({
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogContent className={cn('sm:max-w-md', dialogClassName)}>
             <DialogHeader>
-              <DialogTitle>Criar Novo Registro</DialogTitle>
+              <DialogTitle className="text-xl font-bold">
+                Criar Novo Registro
+              </DialogTitle>
             </DialogHeader>
             <CreateForm close={() => setIsCreateDialogOpen(false)} />
           </DialogContent>
@@ -406,7 +407,9 @@ export function DataTable<TData, TValue>({
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent className={cn('sm:max-w-md', dialogClassName)}>
             <DialogHeader>
-              <DialogTitle>Editar Registro</DialogTitle>
+              <DialogTitle className="text-xl font-bold">
+                Editar Registro
+              </DialogTitle>
             </DialogHeader>
             <EditForm data={selectedRow} close={() => setIsDialogOpen(false)} />
           </DialogContent>

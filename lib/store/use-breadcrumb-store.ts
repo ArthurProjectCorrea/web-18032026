@@ -14,6 +14,7 @@ export const useBreadcrumbStore = create<BreadcrumbState>((set) => ({
     })),
   removeOverride: (path) =>
     set((state) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [path.toLowerCase()]: _, ...rest } = state.overrides;
       return { overrides: rest };
     }),

@@ -37,7 +37,6 @@ export async function loginWithEmail(email: string, password: string) {
 
 export async function syncUserSession(token: string) {
   try {
-    console.log('Sincronizando sessão...');
     // Chamada para sincronizar perfil
     const profileRes = await fetch('/api/me', {
       headers: { Authorization: `Bearer ${token}` },
@@ -48,7 +47,6 @@ export async function syncUserSession(token: string) {
     }
 
     const profileData = await profileRes.json();
-    console.log('Dados do perfil recebidos:', profileData);
 
     if (!profileData.profile) {
       throw new Error('Perfil não encontrado na resposta da API');
@@ -64,7 +62,6 @@ export async function syncUserSession(token: string) {
     }
 
     const permissionsData = await permissionsRes.json();
-    console.log('Dados de permissões recebidos:', permissionsData);
 
     const session: UserSession = {
       user_id: profileData.profile.id,

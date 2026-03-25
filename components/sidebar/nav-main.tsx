@@ -21,23 +21,9 @@ import { cn } from '@/lib/utils';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SidebarItem } from './app-sidebar';
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url?: string;
-    icon?: React.ReactNode;
-    isActive?: boolean;
-    screen?: string;
-    items?: {
-      title: string;
-      url: string;
-      screen?: string;
-    }[];
-  }[];
-}) {
+export function NavMain({ items }: { items: SidebarItem[] }) {
   const pathname = usePathname();
 
   return (
@@ -50,12 +36,15 @@ export function NavMain({
           // If the item acts strictly as a grouping folder (no url) and all its subItems are forbidden, hide it entirely
           if (!item.url && (!subItems || subItems.length === 0)) return null;
 
-          const isItemActive = item.url === pathname;
-          const isAnySubItemActive = subItems?.some(
-            (sub) =>
-              pathname === sub.url ||
-              (sub.url !== '/' && pathname.startsWith(sub.url))
-          );
+          const isItemActive = (item.url || '') === pathname;
+          const isAnySubItemActive = subItems?.some((sub) => {
+            const url = sub.url || '';
+            const currentPath = pathname || '';
+            return (
+              currentPath === url ||
+              (url !== '/' && currentPath.startsWith(url))
+            );
+          });
           const shouldBeOpen = item.isActive || isAnySubItemActive;
 
           return (
@@ -118,22 +107,26 @@ export function NavMain({
                 {subItems?.length ? (
                   <CollapsibleContent>
                     <SidebarMenuSub>
-                      {subItems.map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton
-                            asChild
-                            isActive={
-                              subItem.url === pathname ||
-                              (subItem.url !== '/' &&
-                                pathname.startsWith(subItem.url))
-                            }
-                          >
-                            <Link href={subItem.url}>
-                              <span>{subItem.title}</span>
-                            </Link>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
+                      {subItems.map((subItem) => {
+                        const subUrl = subItem.url || '';
+                        const currentPath = pathname || '';
+                        const isSubActive =
+                          subUrl === currentPath ||
+                          (subUrl !== '/' && currentPath.startsWith(subUrl));
+
+                        return (
+                          <SidebarMenuSubItem key={subItem.title}>
+                            <SidebarMenuSubButton
+                              asChild
+                              isActive={isSubActive}
+                            >
+                              <Link href={subUrl || '#'}>
+                                <span>{subItem.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 ) : null}

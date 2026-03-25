@@ -59,7 +59,12 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
           </p>
         </div>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldLabel
+            htmlFor="email"
+            className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+          >
+            E-mail
+          </FieldLabel>
           <Input
             id="email"
             type="email"
@@ -67,15 +72,20 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-background"
+            className="bg-background focus-visible:ring-primary/20"
           />
         </Field>
         <Field>
           <div className="flex items-center">
-            <FieldLabel htmlFor="password">Senha</FieldLabel>
+            <FieldLabel
+              htmlFor="password"
+              className="text-muted-foreground mb-1.5 text-xs font-semibold tracking-wider uppercase"
+            >
+              Senha
+            </FieldLabel>
             <Link
               href="/forgot-password"
-              className="ml-auto text-sm underline-offset-4 hover:underline"
+              className="text-primary ml-auto text-xs font-medium hover:underline"
             >
               Esqueceu sua senha?
             </Link>
@@ -86,7 +96,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="bg-background"
+            className="bg-background focus-visible:ring-primary/20"
           />
         </Field>
         <Field>

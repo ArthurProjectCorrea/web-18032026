@@ -36,7 +36,9 @@ export function DynamicBreadcrumb() {
   React.useEffect(() => {
     async function fetchScreens() {
       try {
-        const data = await fetchApi<ScreenWithBreadcrumb[]>('/api/screens');
+        const data = await fetchApi<ScreenWithBreadcrumb[]>(
+          '/api/admin/screens?all=true'
+        );
         setScreens(data);
       } catch (error) {
         console.error('Erro ao buscar configurações de breadcrumb:', error);

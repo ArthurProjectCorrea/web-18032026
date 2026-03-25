@@ -26,9 +26,8 @@ export function DataTableViewOptions<TData>({
 
   if (!isMounted) {
     return (
-      <Button variant="outline" size="sm" className="ml-auto hidden lg:flex">
-        <Settings2 className="mr-2 h-4 w-4" />
-        Visualização
+      <Button variant="outline" size="icon" className="hidden lg:flex">
+        <Settings2 className="h-4 w-4" />
       </Button>
     );
   }
@@ -36,9 +35,8 @@ export function DataTableViewOptions<TData>({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="ml-auto hidden lg:flex">
-          <Settings2 className="mr-2 h-4 w-4" />
-          Visualização
+        <Button variant="outline" size="icon" className="hidden lg:flex">
+          <Settings2 className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">

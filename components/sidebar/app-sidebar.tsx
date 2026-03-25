@@ -17,11 +17,13 @@ import { hasPermission } from '@/lib/permissions';
 import { ACTIONS } from '@/configs/permissions';
 import { useSessionStore } from '@/lib/store/use-session-store';
 
-interface SidebarItem {
+export interface SidebarItem {
   title: string;
   url?: string;
   icon?: React.ReactNode;
   screen?: string;
+  action?: string;
+  isActive?: boolean;
   items?: SidebarItem[];
 }
 
@@ -39,7 +41,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         if (item.items) {
           const filteredItems = item.items.filter(
             (sub) =>
-              !sub.screen || hasPermission(session, sub.screen, ACTIONS.VIEW)
+              !sub.screen ||
+              hasPermission(session, sub.screen, sub.action || ACTIONS.VIEW)
           );
           return { ...item, items: filteredItems };
         }
@@ -49,22 +52,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         // Se não tiver sub-itens, verifica a permissão do item principal
         if (item.items) return item.items.length > 0;
         return (
-          !(item as SidebarItem).screen ||
-          hasPermission(
-            session,
-            (item as SidebarItem).screen as string,
-            ACTIONS.VIEW
-          )
+          !item.screen ||
+          hasPermission(session, item.screen, item.action || ACTIONS.VIEW)
         );
       });
   }, [session]);
 
   const filteredQuickActions = React.useMemo(() => {
-    return sidebarData.quickActions.filter(
-      (action) =>
-        !action.screen || hasPermission(session, action.screen, ACTIONS.VIEW)
+    return (sidebarData.quickActions as SidebarItem[]).filter(
+      (item) =>
+        !item.screen ||
+        hasPermission(session, item.screen, item.action || ACTIONS.VIEW)
     );
   }, [session]);
+
+  const filteredNavSecondary = React.useMemo(() => {
+    return (sidebarData.navSecondary as SidebarItem[]).filter(
+      (item) =>
+        !item.screen ||
+        hasPermission(session, item.screen, item.action || ACTIONS.VIEW)
+    );
+  }, [session]);
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader className="dark:bg-sidebar/50 flex h-16 items-center justify-center bg-white/50 backdrop-blur">
@@ -75,7 +84,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavQuick items={filteredQuickActions} />
         <NavMain items={filteredNavMain} />
-        <NavSecondary items={sidebarData.navSecondary} className="mt-auto" />
+        <NavSecondary items={filteredNavSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
